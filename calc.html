@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <title>Aspect Ratio Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg version='1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' enable-background='new 0 0 48 48'%3E%3Cpath fill='%23616161' d='M40,16H8v24c0,2.2,1.8,4,4,4h24c2.2,0,4-1.8,4-4V16z'/%3E%3Cpath fill='%23424242' d='M36,4H12C9.8,4,8,5.8,8,8v9h32V8C40,5.8,38.2,4,36,4z'/%3E%3Cpath fill='%239CCC65' d='M36,14H12c-0.6,0-1-0.4-1-1V8c0-0.6,0.4-1,1-1h24c0.6,0,1,0.4,1,1v5C37,13.6,36.6,14,36,14z'/%3E%3Cg fill='%2333691E'%3E%3Crect x='33' y='10' width='2' height='2'/%3E%3Crect x='29' y='10' width='2' height='2'/%3E%3C/g%3E%3Cpath fill='%23FF5252' d='M36,23h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C37,22.6,36.6,23,36,23z'/%3E%3Cg fill='%23E0E0E0'%3E%3Cpath d='M15,23h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C16,22.6,15.6,23,15,23z'/%3E%3Cpath d='M22,23h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C23,22.6,22.6,23,22,23z'/%3E%3Cpath d='M29,23h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C30,22.6,29.6,23,29,23z'/%3E%3Cpath d='M15,29h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C16,28.6,15.6,29,15,29z'/%3E%3Cpath d='M22,29h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C23,28.6,22.6,29,22,29z'/%3E%3Cpath d='M29,29h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C30,28.6,29.6,29,29,29z'/%3E%3Cpath d='M15,35h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C16,34.6,15.6,35,15,35z'/%3E%3Cpath d='M22,35h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C23,34.6,22.6,35,22,35z'/%3E%3Cpath d='M29,35h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C30,34.6,29.6,35,29,35z'/%3E%3Cpath d='M15,41h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C16,40.6,15.6,41,15,41z'/%3E%3Cpath d='M22,41h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C23,40.6,22.6,41,22,41z'/%3E%3Cpath d='M29,41h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C30,40.6,29.6,41,29,41z'/%3E%3C/g%3E%3Cg fill='%23BDBDBD'%3E%3Cpath d='M36,29h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C37,28.6,36.6,29,36,29z'/%3E%3Cpath d='M36,35h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C37,34.6,36.6,35,36,35z'/%3E%3Cpath d='M36,41h-3c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1h3c0.6,0,1,0.4,1,1v2C37,40.6,36.6,41,36,41z'/%3E%3C/g%3E%3C/svg%3E" />
+    <style>
+      body {
+        background: #222;
+        color: #31c6ef;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        line-height: 32pt;
+      }
+      input {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        background: #444;
+        color: #fff;
+        text-align: right;
+      }
+      .content {
+        width: fit-content;
+        text-align: left;
+        min-width: fit-content;
+        white-space: nowrap;
+        margin: 32px auto 0 auto;
+        padding: 16px;
+      }
+      .quote {
+        font-weight: bold;
+        font-size: x-large;
+        color: white;
+      }
+    </style>
+  </head>
+<body>
+  <form name="calc">
+    <div class="content">
+      <p>
+        <span class="quote">&ldquo;</span>
+        An image of 
+        width
+        <input type="text" id="input_width" size="4"  value="768">
+        and 
+        height
+        <input type="text" id="input_height" size="4" value="512">
+        has
+        <input type="text" id="pixels" size="8" value="325000">
+        pixels.
+      <br>
+        With a ratio of
+        <input type="text" id="ratio" size="5" value="1.666">,
+        the new width is
+        <input type="text" size="4" id="width">,
+        the new height is
+        <input type="text" size="4" id="height">,
+      <br>
+        which is 
+        <input type="text" size="8" id="output_pixels">
+        pixels, exceeding the original pixels by
+        <input type="text" size="8" id="pixels_diff">.
+        <span class="quote">&rdquo;</span>
+      </p>
+    </div>
+  </form>
+  <script>
+    function el(name) { return document.getElementById(name); }
+    function get(name) { return el(name).value; }
+    function set(name, value) { el(name).value = value; }
+
+    function pixels() {
+      set('pixels',parseInt(get('input_width'))*parseInt(get('input_height')));
+      widthAndHeight();
+    }
+
+    function widthAndHeight() {
+      const pixels = parseInt(get('pixels'));
+      const ratio = parseFloat(get('ratio'));
+      const width = Math.floor(Math.sqrt(pixels*ratio));
+      const height = Math.floor(Math.sqrt(pixels*(1/ratio)));
+      set('width', width);
+      set('height', height);
+      outputPixels();
+    }
+
+    function outputPixels() {
+      set('output_pixels', parseInt(get('width'))*parseInt(get('height')));
+      set('pixels_diff', parseInt(get('output_pixels'))-parseInt(get('pixels')));
+    }
+
+    el("input_width").onchange = pixels;
+    el("input_height").onchange = pixels;
+    el("ratio").onchange = widthAndHeight;
+    el("width").onchange = outputPixels;
+    el("height").onchange = outputPixels;
+
+    pixels();
+  </script>
+</body>
+</html>
