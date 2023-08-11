@@ -21,7 +21,6 @@
         width: fit-content;
         text-align: left;
         min-width: fit-content;
-        white-space: nowrap;
         margin: 32px auto 0 auto;
         padding: 16px;
       }
@@ -30,6 +29,13 @@
         font-size: x-large;
         color: white;
       }
+      sup.hint {
+        color: #fff;
+      }
+      p.hint {
+        font-size: small;
+        padding:
+      }
     </style>
   </head>
 <body>
@@ -37,10 +43,9 @@
     <div class="content">
       <p>
         <span class="quote">&ldquo;</span>
-        An image of 
-        width
+        An image in the dimensions of 
         <input type="text" id="input_width" size="4"  value="3200">
-        and height
+        x
         <input type="text" id="input_height" size="4" value="2400">
         with a size of 
         <input type="text" id="pixels" size="8" value="">
@@ -48,8 +53,13 @@
       <br>
         and an aspect ratio of
         <input type="text" id="ratio" size="5" value="">
-        is being shrinked to fit a size up to 
-        <input type="text" size="8" id="target_pixels" value="325000"> pixels.
+        is being shrinked.
+      <br>
+        The size defined by 
+        <input type="text" size="5" id="target_width" value="512"> x
+        <input type="text" size="5" id="target_height" value="768"> <sup class="hint">*</sup> -
+        that's <input type="text" size="8" id="target_pixels" value="325000"> pixels -
+        should not be exceeded.
       <br>
         The new dimensions are 
         <input type="text" size="4" id="width">
@@ -59,26 +69,39 @@
         <span id="output_pixels"></span>
         pixels (<span id="less_more"></span>).
       <br>
-        That is  
+        That is
         <span id="size_percent"></span> %
         of the original size.
         <span class="quote">&rdquo;</span>
       </p>
+      <p>&nbsp;</p>
+      <p class="hint">
+       Hint: changing values will update subsequent values, not any previous values.
+       <br>
+       <sup class="hint">*</sup> the aspect ratio of the target area is not considered but here to calculate the size based on these dimensions.
+      </p>
     </div>
   </form>
   <script>
-    el("input_width").onchange = pixelsAndRatio;
-    el("input_height").onchange = pixelsAndRatio;
-    el("ratio").onchange = widthAndHeight;
-    el("target_pixels").onchange = widthAndHeight;
-    el("width").onchange = outputPixels;
-    el("height").onchange = outputPixels;
+    el('input_width').onchange = pixelsAndRatio;
+    el('input_height').onchange = pixelsAndRatio;
+    el('ratio').onchange = widthAndHeight;
+    el('target_width').onchange = targetPixels;
+    el('target_height').onchange = targetPixels;
+    el('target_pixels').onchange = widthAndHeight;
+    el('width').onchange = outputPixels;
+    el('height').onchange = outputPixels;
+    targetPixels();
     pixelsAndRatio();
 
     function el(name) { return document.getElementById(name); }
     function get(name) { return el(name).value; }
     function set(name, value) { el(name).value = value; }
 
+    function targetPixels() {
+      set('target_pixels', get('target_width')*get('target_height'));
+      pixelsAndRatio();
+    }
 
     function pixelsAndRatio() {
       set('pixels',parseInt(get('input_width'))*parseInt(get('input_height')));
@@ -89,8 +112,8 @@
     function widthAndHeight() {
       const pixels = parseInt(get('target_pixels'));
       const ratio = parseFloat(get('ratio'));
-      const width = Math.round(Math.sqrt(pixels*ratio));
-      const height = Math.round(Math.sqrt(pixels*(1/ratio)));
+      const width = Math.floor(Math.sqrt(pixels*ratio));
+      const height = Math.floor(Math.sqrt(pixels*(1/ratio)));
       set('width', width);
       set('height', height);
       outputPixels();
