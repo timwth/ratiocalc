@@ -67,7 +67,7 @@
         <input type="text" size="4" id="height">
         with a new size of 
         <span id="output_pixels"></span>
-        pixels (<span id="less_more"></span>).
+        pixels (<span id="less_more"></span>, ratio <span id="output_ratio"></span>).
       <br>
         That is
         <span id="size_percent"></span> %
@@ -89,8 +89,8 @@
     el('target_width').onchange = targetPixels;
     el('target_height').onchange = targetPixels;
     el('target_pixels').onchange = widthAndHeight;
-    el('width').onchange = outputPixels;
-    el('height').onchange = outputPixels;
+    el('width').onchange = widthChanged;
+    el('height').onchange = heightChanged;
     targetPixels();
     pixelsAndRatio();
 
@@ -119,11 +119,22 @@
       outputPixels();
     }
 
+    function widthChanged() {
+      set('height', Math.floor(get('target_pixels')/get('width')));
+      outputPixels();
+    }
+
+    function heightChanged() {
+      set('width', Math.floor(get('target_pixels')/get('height')));
+      outputPixels();
+    }
+
     function outputPixels() {
+      el('output_ratio').innerHTML = Math.floor(parseInt(get('width'))/parseInt(get('height'))*1000)/1000;
       const outputPixels = parseInt(get('width'))*parseInt(get('height'));
       el('output_pixels').innerHTML = outputPixels;
       const diff = outputPixels-get('target_pixels');
-      el('less_more').innerHTML = Math.abs(diff)+' '+(diff<0 ? 'less' : 'more');
+      el('less_more').innerHTML = diff === 0 ? 'same' : Math.abs(diff)+' '+(diff<0 ? 'less' : 'more');
       el('size_percent').innerHTML = Math.floor(parseInt(outputPixels)/parseInt(get('pixels'))*100000)/1000;
     }
   </script>
