@@ -29,6 +29,9 @@
         font-size: x-large;
         color: white;
       }
+      .calculated {
+        color: #96e4f9
+      }
       sup.hint {
         color: #fff;
       }
@@ -55,23 +58,27 @@
         <input type="text" id="ratio" size="5" value="">
         is being shrinked.
       <br>
-        The size defined by 
+        A limited size defined by 
         <input type="text" size="5" id="target_width" value="512"> x
         <input type="text" size="5" id="target_height" value="768"> <sup class="hint">*</sup> -
         that's <input type="text" size="8" id="target_pixels" value="325000"> pixels -
         should not be exceeded.
       <br>
-        The new dimensions are 
+        The new image dimensions are 
         <input type="text" size="4" id="width">
         x
-        <input type="text" size="4" id="height">
-        with a new size of 
-        <span id="output_pixels"></span>
-        pixels (<span id="less_more"></span>, ratio <span id="output_ratio"></span>).
+        <input type="text" size="4" id="height">;
+        divisible by  <input type="text" size="2" id="mod" value="8">, that is
+        <input type="text" size="4" id="mod_width">
+        x
+        <input type="text" size="4" id="mod_height">.
       <br>
-        That is
-        <span id="size_percent"></span> %
-        of the original size.
+        The final size is
+        <span id="output_pixels"  class="calculated"></span> pixels,
+        <span id="less_more"  class="calculated"></span> compared to the limit.
+      <br>
+        That is <span id="size_percent" class="calculated"></span> % of the original size
+        with a ratio of <span id="output_ratio"  class="calculated"></span>.
         <span class="quote">&rdquo;</span>
       </p>
       <p>&nbsp;</p>
@@ -91,6 +98,9 @@
     el('target_pixels').onchange = widthAndHeight;
     el('width').onchange = widthChanged;
     el('height').onchange = heightChanged;
+    el('mod').onchange = modDimensions;
+    el('mod_width').onchange = outputPixels;
+    el('mod_height').onchange = outputPixels;
     targetPixels();
     pixelsAndRatio();
 
@@ -99,7 +109,7 @@
     function set(name, value) { el(name).value = value; }
 
     function targetPixels() {
-      set('target_pixels', get('target_width')*get('target_height'));
+      set('target_pixels', parseInt(get('target_width'))*parseInt(get('target_height')));
       pixelsAndRatio();
     }
 
@@ -113,28 +123,47 @@
       const pixels = parseInt(get('target_pixels'));
       const ratio = parseFloat(get('ratio'));
       const width = Math.floor(Math.sqrt(pixels*ratio));
-      const height = Math.floor(Math.sqrt(pixels*(1/ratio)));
-      set('width', width);
-      set('height', height);
+      const height = Math.floor(pixels/width);
+      set('width', Math.floor(width));
+      set('height', Math.floor(height));
+      modDimensions();
       outputPixels();
     }
 
     function widthChanged() {
-      set('height', Math.floor(get('target_pixels')/get('width')));
+      const m = parseInt(get('mod'));
+      set('height', Math.floor(parseInt(get('target_pixels'))/parseInt(get('width'))/m)*m);
+      modDimensions();
       outputPixels();
     }
 
     function heightChanged() {
-      set('width', Math.floor(get('target_pixels')/get('height')));
+      const m = parseInt(get('mod'));
+      set('width', Math.floor(parseInt(get('target_pixels'))/parseInt(get('height'))/m)*m);
+      modDimensions();
+      outputPixels();
+    }
+
+    function modDimensions() {
+      const m = parseInt(get('mod'));
+      const width = parseInt(get('width'));
+      const pixels = parseInt(get('target_pixels'));
+      const mod_width = Math.floor(width/m)*m;
+      const mod_height = Math.floor(pixels/mod_width/m)*m;
+      set('mod_width', mod_width);
+      set('mod_height', mod_height);
       outputPixels();
     }
 
     function outputPixels() {
-      el('output_ratio').innerHTML = Math.floor(parseInt(get('width'))/parseInt(get('height'))*1000)/1000;
-      const outputPixels = parseInt(get('width'))*parseInt(get('height'));
-      el('output_pixels').innerHTML = outputPixels;
-      const diff = outputPixels-get('target_pixels');
-      el('less_more').innerHTML = diff === 0 ? 'same' : Math.abs(diff)+' '+(diff<0 ? 'less' : 'more');
+      const nf = new Intl.NumberFormat();
+      const width = parseInt(get('mod_width'));
+      const height = parseInt(get('mod_height'));
+      el('output_ratio').innerHTML = Math.floor(width/height*1000)/1000;
+      const outputPixels = width*height;
+      el('output_pixels').innerHTML = nf.format(outputPixels);
+      const diff = outputPixels-parseInt(get('target_pixels'));
+      el('less_more').innerHTML = diff === 0 ? 'same' : nf.format(Math.abs(diff))+' '+(diff<0 ? 'less' : 'more');
       el('size_percent').innerHTML = Math.floor(parseInt(outputPixels)/parseInt(get('pixels'))*100000)/1000;
     }
   </script>
